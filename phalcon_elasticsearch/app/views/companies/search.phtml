@@ -1,0 +1,106 @@
+<?php
+ $form = new CompanyForm();
+?>
+<h1>Company search</h1>
+<div class="col-md-12">
+    <form method="get" action="search">
+        <p>
+            <label>Type searched sentence</label>
+            <?php echo $form->render("name", ['class' => 'form-control', 'value' => $name]); ?>
+        </p>
+        <p class="hidden">
+            <input id="page" type="number" name="page" value="">
+        </p>
+        <p style="text-align: center">
+            <label class="col-md-12" for="sort_name">Sort ASC Name
+                <?php echo $form->render("sort_name", [
+                    'class' => 'form-control',
+                    'id' => 'sort_name',
+                    'value' => 1,
+                    $sort_name ? 'checked' : '' => 0
+                ]); ?>
+            </label>
+        </p>
+        <p>
+            <input type="submit" value="Get data" class="btn btn-primary" />
+        </p>
+
+    </form>
+    <?php
+    if(isset($companies))
+    {
+        $i = 0;
+        foreach($companies as $company)
+        {
+            $i++;
+        ?>
+            <div class="text-center"">
+
+            <span style="float: left;">
+                <?php
+                echo ($currentPage)*10 + $i;
+                ?>
+            </span>
+            <?php
+                echo $company['fields']['CompanyName'][0]."<br>".
+                implode(', ', $company['fields']['CompanyCategory'])."<br>"."<br>";
+            ?></div><?php
+        }
+    }
+
+    if(isset($total)){
+        $pages = round($total/10);
+        if(!empty($pages)){
+
+        ?>
+    <nav>
+        <ul class="pagination">
+            <?php
+            if ($currentPage + 4 <= $pages)
+            {
+                $max = $currentPage + 4;
+            }else{
+                $max = $pages;
+            }
+            if ($currentPage - 4 >= 0)
+            {
+                $min = $currentPage - 4;
+            }else{
+                $min = 0;
+            }
+            if($currentPage > 1){
+                $previousPage = $currentPage - 1;
+                ?>
+            <li>
+              <a href="<?php echo $uri.$previousPage?>" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <?php
+            }
+            foreach(range($min, $max) as $page)
+            {
+                ?>
+            <li><a href="<?php echo $uri.$page ?>">
+        <?php
+                echo $page;
+            }
+            if($currentPage <= (int)$total/10){
+            $nextPage = $currentPage + 1;
+            ?>
+
+
+                </a></li>
+            <li>
+                <a href="<?php echo $uri.$nextPage?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        <?php } ?>
+        </ul>
+    </nav>
+    <?php
+        }
+    }
+    ?>
+</div>

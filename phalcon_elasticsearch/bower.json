@@ -1,0 +1,16 @@
+{
+  "name": "phalcon",
+  "homepage": "https://github.com/phalcon/tutorial",
+  "authors": [
+    "<j_szlapka@interia.pl>"
+  ],
+  "description": "bower package for companies search app",
+  "main": "",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "bootstrap"
+  ],
+  "license": "MIT"
+}
